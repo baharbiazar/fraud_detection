@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>fraud detector</title>
+    <meta name="description" content="Recommendation">
+    <meta name="author" content="Your Name">
+    
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+        }
+        table.center {
+            margin-left:auto; 
+            margin-right:auto;
+        }
+        button {
+            font-size : 18px;
+        }
+
+        body {  margin: 45px;
+                background-image: url('https://www.securitymagazine.com/ext/resources/images/fraud-freepik-2.jpg?1629376018');
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;
+            }
+    </style>
+
+</head>
+
+<body>
+    
+    <div>
+        <h2> View results: </h2>
+        
+    </div>
+        
+    
+
+
+<table>
+    <thead>
+        <th> ID </th>
+        <th> Risk Level </th>
+        
+    </thead>
+    <tbody>
+        {% for row in predicts.itertuples() %}
+        <tr>
+            <td>{{ row.object_id }}</td>
+            <td>{{ row.risk }}</td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+    <form action="/">
+        <button type="submit"> Dashboard Home </button>
+    </form>
+</body>
+
+</html>
