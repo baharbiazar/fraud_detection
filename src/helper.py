@@ -6,6 +6,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+plt.style.use('ggplot')
 import geopandas as gpd
 import pickle
 
@@ -68,7 +69,7 @@ def prep_df(main_df):
     df = vectorizeAllCategoricalColumns(df)
     
     # number of previous payouts
-    df['prev_payout_count'] = df.loc['previous_payouts'].apply(lambda x: len(x))
+    df['prev_payout_count'] = df['previous_payouts'].apply(lambda x: len(x))
     
     #create Fraud(target) column:
     df['Fraud'] = df['acct_type'].apply(lambda x: fraud(x))
