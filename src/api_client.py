@@ -1,7 +1,15 @@
 """Realtime Events API Client for DSI Fraud Detection Case Study"""
+import os
+import sys
+import os.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
+
 import time
 import requests
-import pymongo
+from pymongo import MongoClient
+from helper import clean_client_data
+
+import pickle
 
 
 class EventAPIClient:
@@ -11,17 +19,34 @@ class EventAPIClient:
                  api_url='https://hxobin8em5.execute-api.us-west-2.amazonaws.com/api/',
                  api_key='vYm9mTUuspeyAWH1v-acfoTlck-tCxwTw9YfCynC',
                  db=None,
+                 model=None,
                  interval=30):
         """Initialize the API client."""
         self.next_sequence_number = first_sequence_number
         self.api_url = api_url
         self.api_key = api_key
         self.db = db
+        self.model = model
         self.interval = 30
+        
 
     def save_to_database(self, row):
+
         """Save a data row to the database."""
-        print("Received data:\n" + repr(row) + "\n")  # replace this with your code
+        if self.model:
+            clean_data = clean_client_data(row)
+            preds = self.model.predict(clean_data)
+            print(preds)
+        for i in preds:
+            if i == 0:
+                row['prediction']= 'Low Risk Transaction'
+            elif i ==1:
+                row['prediction'] = 'Suspicious Transaction'
+            else:
+                row['prediction']= 'Fraud Transaction'
+        row = {k: v if v else '(None)' for k, v in row.items()}
+        self.db.insert_one(row)
+        
 
     def get_data(self):
         """Fetch data from the API."""
@@ -41,17 +66,24 @@ class EventAPIClient:
                 print("Saving...")
                 for row in data:
                     self.save_to_database(row)
+                    
             else:
                 print("No new data received.")
             print(f"Waiting {interval} seconds...")
             time.sleep(interval)
 
 
-def main():
-    """Collect events every 30 seconds."""
-    client = EventAPIClient()
-    client.collect()
 
 
 if __name__ == "__main__":
-    main()
+
+    mongo_client = MongoClient('0.0.0.0', 27017)
+    db = mongo_client['fraud']
+    records = db['records']
+
+    with open('src/app/model2.pkl', 'rb') as f:
+        model = pickle.load(f)
+
+    client = EventAPIClient(db=records, model=model)
+    client.collect()
+    

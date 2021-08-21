@@ -8,11 +8,30 @@
     <meta name="author" content="Your Name">
 
     <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+        }
+        table.center {
+            margin-left:auto; 
+            margin-right:auto;
+        }
+        button {
+            font-size : 18px;
+        }
+
+
+
         body {  margin: 45px;
                 background-image: url('https://www.securitymagazine.com/ext/resources/images/fraud-freepik-2.jpg?1629376018');
                 background-repeat: no-repeat;
                 background-attachment: fixed;
-                background-size: cover;
+                background-position: right;
+                background-size: 900px 800px;
+                background-color: rgb(190, 189, 189) ;
             }
     </style>
 
@@ -21,7 +40,26 @@
 <body>
     <h1> Live API </h1>
 
-    
+    <table>
+        <thead>
+            <th> ID </th>
+            <th> Risk Level </th>
+            
+        </thead>
+        <tbody>
+            {% for a,b in predicts %}
+            <tr>
+                <td>{{ a }}</td>
+                <td>{{ b }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table> <br>
+        <form action="/">
+            <button type="submit"> Home </button>
+        </form>
+    </body>
+
 
 </body>
 

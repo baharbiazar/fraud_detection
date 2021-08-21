@@ -8,13 +8,15 @@ from flask import Flask, render_template, request
 
 import helper
 import pandas as pd
+from pymongo import MongoClient
+from api_client import EventAPIClient
+
 import pickle
 
 print(os.listdir(path = "."))
 # exit()
 
 app = Flask(__name__)
-
 
 
 @app.route('/')
@@ -39,21 +41,15 @@ def predict():
 
 @app.route('/live')
 def live():
-    upload_file = request.files['user_csv']
-    raw_data = pd.read_json(upload_file)
-    print(raw_data.head(2))
-    if upload_file.filename:
-        
-        pass
+    mongo_client = MongoClient('0.0.0.0', 27017)
+    db = mongo_client['fraud']
+    records = db['records']
+    result = list(records.find({}))
+    predictions = []
+    for i in result:
+        predictions.append((i['object_id'], i['prediction']))
 
-
-      
-        
-        #display predicts
-
-
-
-    return render_template('table.html')
+    return render_template('live.html',predicts = predictions)
 
 
 if __name__ == '__main__':

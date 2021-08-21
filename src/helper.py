@@ -68,7 +68,7 @@ def prep_df(main_df):
     df = vectorizeAllCategoricalColumns(df)
     
     # number of previous payouts
-    df['prev_payout_count'] = df['previous_payouts'].apply(lambda x: len(x))
+    df['prev_payout_count'] = df.loc['previous_payouts'].apply(lambda x: len(x))
     
     #create Fraud(target) column:
     df['Fraud'] = df['acct_type'].apply(lambda x: fraud(x))
@@ -91,8 +91,8 @@ def split_df(df, target_col):
     function splits the data into X_train, x_test, y_train, y_test
     '''
 
-    X = df
-    y = df.pop(target_col)
+    X = df.copy()
+    y = X.pop(target_col)
 
     X_train, X_test, y_train, y_test = train_test_split(X,y, random_state= 10)
 
@@ -125,7 +125,6 @@ def predictions(input_file):
     '''
     returns a list of predictions
     '''
-
     preds =[]
     with open('model.pkl', 'rb') as f:
         model = pickle.load(f)
@@ -133,13 +132,37 @@ def predictions(input_file):
     predictions = model.predict(input_file).tolist()
     for i in predictions:
         if i == 0:
-            preds.append('No Risk Transaction')
+            preds.append('Low Risk Transaction')
         elif i ==1:
             preds.append('Suspicious Transaction')
         else:
             preds.append('Fraud Transaction')
 
-    return preds        
+    return preds   
+
+
+def clean_client_data(row):
+    client_df = pd.DataFrame.from_dict(row, orient='index').T
+    
+    df = client_df[['object_id','previous_payouts','sale_duration','user_age','user_created','user_type']]  
+    print(df.columns)
+    # number of previous payouts
+    df['prev_payout_count'] = df.iloc[:,1].apply(lambda x: len(x))
+    
+    # drop unwanted columns
+    df2= df.drop(columns=['previous_payouts'])
+    print(df2)
+
+    # replace NaN values:
+    df2.fillna(-1, inplace= True)
+
+    return df2
+
+
+
+
+
+
 
     
 
