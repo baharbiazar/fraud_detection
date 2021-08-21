@@ -158,58 +158,6 @@ You'll want to store each prediction the model makes on new examples, which mean
 
 ### Step 5: Web App
 
-#### [Deliverable]: Hello World app
-
-1. A request in your browser to `/hello` should display "Hello, World!". Set up a Flask app with a route `GET /hello` to do so. Here's an example app skeleton:
-
-```python
-from flask import Flask, request
-app = Flask(__name__)
-
-@app.route('/', methods=['GET'])
-def home():
-    return ''' <p> nothing here, friend, but a link to 
-                   <a href="/hello">hello</a> and an 
-                   <a href="/form_example">example form</a> </p> '''
-
-@app.route('/hello', methods=['GET'])
-def hello_world():
-    return ''' <h1> Hello, World!</h1> '''
-
-@app.route('/form_example', methods=['GET'])
-def form_display():
-    return ''' <form action="/string_reverse" method="POST">
-                <input type="text" name="some_string" />
-                <input type="submit" />
-               </form>
-             '''
-
-@app.route('/string_reverse', methods=['POST'])
-def reverse_string():
-    text = str(request.form['some_string'])
-    reversed_string = text[-1::-1]
-    return ''' output: {}  '''.format(reversed_string)
-
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
-```
-
-Use this [tutorial](http://blog.luisrei.com/articles/flaskrest.html) to for more.
-
-#### [Deliverable]: Fraud scoring service
-
-1. Set up a route `POST /score` and have it execute the logic in your prediction script. You should import the script as a module and call functions defined therein.
-
-    There are two things you'll do to make this all more efficient:
-
-    1. Only unpickle the model once
-    2. Only connect to the database once.
-    
-    Do both in a `if __name__ == '__main__':` block before you call `app.run()` and you can refer to these top-level global variables from within the function. This may require some re-architecting of your prediction module.
-
-    The individual example will no longer be coming from a local file, but instead you will get it by making a request to a server that will give you a data point as a string, which you can parse into JSON. 
-You can use `json.loads()` to parse a string to json, which is the reverse process of `json.dumps()`. You'll still need to vectorize it, predict, and store the example and prediction in the database.
 
 ### Step 6: Get "live" data
 
@@ -269,19 +217,6 @@ client.collect()
 1. Write a function that periodically fetches new data, generates a predicted fraud probability, and saves it to your database (after verifying that the data hasn't been seen before).
 
 **Make sure your app is adding the examples to the database with predicted fraud probabilities.**
-
-## Day 2: Afternoon
-
-### Step 7: Dashboard
-
-#### [Deliverable]: Web front end to present results
-
-You want to present potentially fraudulent transactions with their probability scores from your model. The transactions should be segmented into 3 groups: low risk, medium risk, or high risk (based on the probabilities).
-
-* Add route in Flask app for a dashboard
-* Read data from postgres/mongodb
-* Return HTML with the data
-    * To generate the HTML from the json data from the database, either just use simple string concatenation or Jinja2 templates.
 
 
 
