@@ -18,14 +18,7 @@ This case study was done as part of Galvanize cohort in collaboration with two o
 
 ## Overview
 ### The Data
-
-> NOTE: This data is VERY sensitive!
-
-It is located in `data/data.zip`.
-
-***Do not share this data with anyone! Do not include the data file in your pull request!***
-
-You will be required to work on the project on campus.
+The data is confidential and can not be shared outside of Galvanize. The training data has 14337 rows and 44 features. The second part of the data comes from a live API that is utalized for predictions and is saved in the data base.
 
 
 ### Deliverables 
