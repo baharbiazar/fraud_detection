@@ -1,33 +1,17 @@
-# Premise
+# Content
 
-- [Premise](#premise)
+- [Content](#content)
   - [Overview](#overview)
     - [The Data](#the-data)
     - [Deliverables](#deliverables)
-    - [The "product" of fraud](#the-product-of-fraud)
-  - [Day 1: Morning](#day-1-morning)
-    - [Step 1: EDA](#step-1-eda)
-      - [[Deliverable]: Look at the data](#deliverable-look-at-the-data)
-      - [[Deliverable]: Scoping the problem](#deliverable-scoping-the-problem)
-    - [Step 2: Building the Model](#step-2-building-the-model)
-      - [[Deliverable]: Comparing models](#deliverable-comparing-models)
-  - [Day 1: Afternoon](#day-1-afternoon)
-      - [[Deliverable]: Model description and code](#deliverable-model-description-and-code)
-      - [[Deliverable]: Pickled model](#deliverable-pickled-model)
-    - [Step 3: Prediction script](#step-3-prediction-script)
-      - [[Deliverable]: Prediction script](#deliverable-prediction-script)
-    - [Step 4: Database](#step-4-database)
-      - [[Deliverable]: Prediction script backed by a database](#deliverable-prediction-script-backed-by-a-database)
-  - [Day 2: Morning](#day-2-morning)
-    - [Step 5: Web App](#step-5-web-app)
-      - [[Deliverable]: Hello World app](#deliverable-hello-world-app)
-      - [[Deliverable]: Fraud scoring service](#deliverable-fraud-scoring-service)
-    - [Step 6: Get "live" data](#step-6-get-live-data)
-  - [Day 2: Afternoon](#day-2-afternoon)
-    - [Step 7: Dashboard](#step-7-dashboard)
-      - [[Deliverable]: Web front end to present results](#deliverable-web-front-end-to-present-results)
-    - [Step 8: Deploy!](#step-8-deploy)
-    - [Extra](#extra)
+  - [EDA](#EDA)
+  - [Model](#model)
+    - [Model description and code](#model-description-and-code)
+    - [Prediction script](#prediction-script)
+  - [Database](#database)
+    - [Web App](#web-app)
+    - [Get "live" data](#get-live-data)
+ 
 
 You are a contract data scientist/consultant hired by a new e-commerce site to try to weed out fraudsters.  The company unfortunately does not have much data science expertise... so you must properly scope and present your solution to the manager before you embark on your analysis.  Also, you will need to build a sustainable software project that you can hand off to the companies engineers by deploying your model in the cloud.  Since others will potentially use/extend your code you **NEED** to properly encapsulate your code and leave plenty of comments.
 
@@ -72,7 +56,7 @@ Something that you will need to think about throughout this case study is how th
 
 Your model will be used only the first step in the fraud identification process. You do not use the model to declare a ground truth about fraud or not fraud, but simply to flag which transactions need further manual review.  You will be building a triage model of what are the most pressing (and costly) transactions you have seen. It may also be useful to display what factors contribute to a given case being flagged as fraudulent by your model.  
 
-## Day 1: Morning
+
 
 ### Step 1: EDA
 Before you start building the model, start with some EDA.
@@ -300,22 +284,5 @@ You want to present potentially fraudulent transactions with their probability s
     * To generate the HTML from the json data from the database, either just use simple string concatenation or Jinja2 templates.
 
 
-### Step 8: Deploy!
-
-Use [these instructions](https://github.com/GalvanizeDataScience/project-proposals/blob/master/host_app_on_amazon.md) as your guide if you need one.
 
 
-* Set up AWS instance
-* Set up environment on your EC2 instance
-* Push your code to github
-* SSH into the instance and clone your repo
-* Run Flask app on instance 
-* Make it work (debug, debug, debug)
-* Profits!
-
-
-### Extra
-
-* Make your dashboard interactive. Allow a dashboard user to clear or flag fraud events. Come up with other features that might be useful.
-
-* Create a D3 visualization for your web based frontend.  You might want to visualize any number of metrics/data.  Use your creativity to create something that makes sense for a end user in terms of what data you present.
