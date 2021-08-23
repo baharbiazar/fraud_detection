@@ -58,8 +58,8 @@ The model will be used only the first step in the fraud identification process. 
 * Base Model: I first started with an XGBoost classifier and a Random Forest model.  
 * Ultimate Model: After hyper parameter tuning and cross-validation, the best model that can predict the fraudulent activities more accurately is a random forest with following classification reports on the test data:
 
-<img src="images/table1.png" width="500" />
-<img src="images/table2.png" width="500" />
+<img src="images/table1.png" width="700" />
+<img src="images/table2.png" width="700" />
 
 
 
@@ -77,4 +77,4 @@ There is also an option to connect to live data and recieve predictions of clien
 
 Each precition is saved in the datbase as well as the raw data inputs.
 
-<img src="images/app.png" width="500" />
+<img src="images/app.png" />
