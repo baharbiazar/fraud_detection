@@ -6,11 +6,9 @@
     - [Deliverables](#deliverables)
   - [EDA](#EDA)
   - [Model](#model)
-    - [Model description and code](#model-description-and-code)
-    - [Prediction script](#prediction-script)
   - [Database](#database)
     - [Web App](#web-app)
-    - [Get "live" data](#get-live-data)
+    
  
 
 This study was done as part of Galvanize cohort in collaboration with two other peers. The objective is to help a new e-commerce site to try to weed out fraudsters. Deliverables include but are not limited to exploratory data analysis, build  proper machine learning models and presenting the solution as well as building a sustainable software project that can be hand off to the companies engineers by deploying the final model in the cloud.  
@@ -35,7 +33,7 @@ The data is confidential and can not be shared outside of Galvanize. The trainin
 Loaded the data with pandas. Added a 'Fraud' column that contains numeric values 0,1,2 depending on if the event is fraud. If `acct_type` field contains the word `fraud`, that point is considered 'High Risk' or 2, if the field is `premium`, the label is 'Low Risk' or 0 and everything else is considered 'Medium Risk' or 1.
 86.3 % of the data is low risk, 4.7% are spammer and TOS voilators and 9% is fraudulent.
 
-<img src="images/transactions.png" width="700" />
+<img src="images/transactions.png" width="500" />
 
 - Step 2:
 Using latitude and longitude to visualize the data distribution. Seems most of the transactions in Asia are fraudulent.
@@ -44,97 +42,39 @@ Using latitude and longitude to visualize the data distribution. Seems most of t
 
 - Step 3:
 Data warngling:
-* NaN values are replaces with -1
-* These string type features are dropped:
-* These string type features are one hot encoded:  
-* `previous_payouts` column is converted to integer values that indicates the length of previous payouts. 
+* NaN values are replaced with KNN imputaion values
+* These string type features are dropped: `'description'`, `'ticket_types'`, 
+                  `'org_desc'`, `'name'` and`'listed'`.
+* These string type features are one hot encoded:  `'country'`,`'currency'`, `'email_domain'`,`'org_name'`,
+            `'payee_name'`,`'venue_address'`,`'venue_country'`,`'venue_name'`,
+            `'venue_state'`, `'payout_type`'
+* `previous_payouts` column is converted into integer values that indicates the length of previous payouts. 
 
 
 ### Model
-The model will be used only the first step in the fraud identification process. You do not use the model to declare a ground truth about fraud or not fraud, but simply to flag which transactions need further manual review.  You will be building a triage model of what are the most pressing (and costly) transactions you have seen. It may also be useful to display what factors contribute to a given case being flagged as fraudulent by your model.  
+The model will be used only the first step in the fraud identification process. It won't be used to declare a ground truth about fraud or not fraud, but simply to flag which transactions need further manual review.  A triage model of what are the most pressing (and costly) transactions is built.
 
 #### Comparing models
-* Base Model:
-* Ultimate Model: Random Forest classifier with 
+* Base Model: I first started with an XGBoost classifier and a Random Forest model.  
+* Ultimate Model: After hyper parameter tuning and cross-validation, the best model that can predict the fraudulent activities more accurately is a random forest with following classification reports on the test data:
 
-**Notes for writing code:**
-* As you write your code, **always be committing** (ABC) to Github!
-* Write **clean and modular code**.
-* Include **comments** on every method.
-
-*Make sure to get a working model first before you try all of your fancy ideas!*
-
-1. If you have complicated ideas, implement the simplest one first! Get a baseline built so that you can compare more complicated models to that one.
-
-2. Experiment with using different features in your feature matrix. Use different featurization techniques like stemming, lemmatization, tf-idf, part of speech tagging, etc.
-
-3. Experiment with different models like SVM, Logistic Regression, Decision Trees, kNN, etc. You might end up with a final model that is a combination of multiple classification models.
-
-4. Compare their results. Pick a good metric; don't just use accuracy!
-
-#### [Deliverable]: Model description and code
-After all this experimentation, you should end up with a model you are happy with.
-
-1. Create a file called `model.py` which builds the model based on the training data.
-
-    * Feel free to use any library to get the job done.
-    * Again, make sure your code is **clean**, **modular** and **well-commented**! The general rule of thumb: if you looked at your code in a couple months, would you be able to understand it?
-
-2. In a file called `report.md`, describe your project findings including:
-    * An overview of a chosen "optimal" modeling technique, with:
-        * process flow
-        * preprocessing
-        * accuracy metrics selected
-        * validation and testing methodology
-        * parameter tuning involved in generating the model
-        * further steps you might have taken if you were to continue the project.
-
-
-#### [Deliverable]: Pickled model
-
-1. Use `pickle` to serialize your trained model and store it in a file. This is going to allow you to use the model without retraining it for every prediction, which would be ridiculous.
-
-### Step 3: Prediction script
-
-Take a few raw examples and store them in json or csv format in a file called `test_script_examples`.
-
-
-#### [Deliverable]: Prediction script
-
-1. Write a script `predict.py` that reads in a single example from `test_script_examples`, vectorizes it, unpickles the model, predicts the label, and outputs the label probability (print to standard out is fine).
-
-    This script will serve as a sort of conceptual and code bridge to the web app you're about to build.
-
-    Each time you run the script, it will predict on one example, just like a web app request. You may be thinking that unpickling the model every time is quite inefficient and you'd be right; we'll remove that inefficiency in the web app.
-
-
-### Step 4: Database
-
-#### [Deliverable]: Prediction script backed by a database
-
-You'll want to store each prediction the model makes on new examples, which means you'll need a database.
-
-1. Set up a Postgres or MongoDB database that will store each example that the script runs on. You should create a database schema that reflects the form of the raw example data and add a column for the predicted probability of fraud.
-
-2. Write a function in your script that takes the example data and the prediction as arguments and inserts the data into the database.
-
-    Now, each time you run your script, one row should be added to the `predictions` table with a predicted probability of fraud.
+<img src="images/table1.png" width="500" />
+<img src="images/table2.png" width="500" />
 
 
 
+### Database
 
-### Web App
-
-
-### Step 6: Get "live" data
-
-We've set up a service for you that will send out "live" data so that you can see that your app is really working.
-
-To use this service, you will need to make a request to our secure server. It gives a maximum of the 10 most recent datapoints, ordered by `sequence_number`. New datapoints come in every few minutes.
-
-*Warning: you will need to implement the save_to_database method.*
+Each prediction the model makes on new examples, is stored in a MongoDB database.
+Database schema reflects the form of the raw example data and an added for the predicted probability of fraud.
 
 
-1. Write a function that periodically fetches new data, generates a predicted fraud probability, and saves it to your database (after verifying that the data hasn't been seen before).
+#### Web App
 
-**Make sure your app is adding the examples to the database with predicted fraud probabilities.**
+A Flask App is created that allows the user to insert CSV files of raw data and get fraud prediction for each row in return. 
+
+There is also an option to connect to live data and recieve predictions of client API input every few minutes.
+
+Each precition is saved in the datbase as well as the raw data inputs.
+
+<img src="images/app.png" width="500" />
