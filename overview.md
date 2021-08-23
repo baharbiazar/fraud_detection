@@ -13,7 +13,7 @@
     - [Get "live" data](#get-live-data)
  
 
-This case study was done as part of Galvanize cohort in collaboration with two other peers. The objective is to help a new e-commerce site to try to weed out fraudsters. Deliverables include but are not limited to exploratory data analysis, build  proper machine learning models and presenting the solution as well as building a sustainable software project that can be hand off to the companies engineers by deploying the final model in the cloud.  
+This study was done as part of Galvanize cohort in collaboration with two other peers. The objective is to help a new e-commerce site to try to weed out fraudsters. Deliverables include but are not limited to exploratory data analysis, build  proper machine learning models and presenting the solution as well as building a sustainable software project that can be hand off to the companies engineers by deploying the final model in the cloud.  
 
 
 ## Overview
@@ -25,29 +25,12 @@ The data is confidential and can not be shared outside of Galvanize. The trainin
 * EDA
 * Classification model building
 * Flask app with documented API
-    * Needs to query live data from our server 
+    * Query live data from server 
 * Web based front-end to enable quick triage of potential fraud
     * Triage importance of transactions (low risk, medium risk, high risk)
 
 
-
-### The "product" of fraud
-
-Something that you will need to think about throughout this case study is how the product of your client fits into the given technical process.  A few points to note about the case of fraud:
-
-* Failures are not created equal
-    * False positives decrease customer/user trust
-    * False negatives cost money
-        * Not all false negative cost the same amount of money
-* Accessibility
-    * Other (non-technical) people may need to interact with the model/machinery
-    * Manual review
-
-Your model will be used only the first step in the fraud identification process. You do not use the model to declare a ground truth about fraud or not fraud, but simply to flag which transactions need further manual review.  You will be building a triage model of what are the most pressing (and costly) transactions you have seen. It may also be useful to display what factors contribute to a given case being flagged as fraudulent by your model.  
-
-
-
-### Step 1: EDA
+### EDA
 Before you start building the model, start with some EDA.
 
 #### [Deliverable]: Look at the data
@@ -72,9 +55,10 @@ Before you get cranking on your model, think of how to approach the problem.
 3. **What metric will you use to determine success?**
 
 
-### Step 2: Building the Model
+### Model
+The model will be used only the first step in the fraud identification process. You do not use the model to declare a ground truth about fraud or not fraud, but simply to flag which transactions need further manual review.  You will be building a triage model of what are the most pressing (and costly) transactions you have seen. It may also be useful to display what factors contribute to a given case being flagged as fraudulent by your model.  
 
-#### [Deliverable]: Comparing models
+#### Comparing models
 Start building your potential models.
 
 **Notes for writing code:**
@@ -91,8 +75,6 @@ Start building your potential models.
 3. Experiment with different models like SVM, Logistic Regression, Decision Trees, kNN, etc. You might end up with a final model that is a combination of multiple classification models.
 
 4. Compare their results. Pick a good metric; don't just use accuracy!
-
-## Day 1: Afternoon
 
 #### [Deliverable]: Model description and code
 After all this experimentation, you should end up with a model you are happy with.
@@ -160,7 +142,3 @@ To use this service, you will need to make a request to our secure server. It gi
 1. Write a function that periodically fetches new data, generates a predicted fraud probability, and saves it to your database (after verifying that the data hasn't been seen before).
 
 **Make sure your app is adding the examples to the database with predicted fraud probabilities.**
-
-
-
-
