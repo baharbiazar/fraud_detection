@@ -61,6 +61,8 @@ The model will be used only the first step in the fraud identification process. 
 <img src="images/table1.png" width="700" />
 <img src="images/table2.png" width="700" />
 
+#### feature Importance
+<img src="images/featureimpo.png" width="700" />
 
 
 ### Database
