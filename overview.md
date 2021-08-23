@@ -36,7 +36,8 @@ Loaded the data with pandas. Added a 'Fraud' column that contains numeric values
 
 <img src="images/transactions.png" width="700" />
 
-2. Check how many fraud and not fraud events you have.
+- Step 2:
+Using latitude and longitude to visualize the data distribution. 
 
 3. Look at the features. Make note of ones you think will be particularly useful to you.
 
