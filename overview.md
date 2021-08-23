@@ -31,7 +31,8 @@ The data is confidential and can not be shared outside of Galvanize. The trainin
 
 
 ### EDA
-Before you start building the model, start with some EDA.
+- Step 1:
+
 
 #### [Deliverable]: Look at the data
 Start by looking at the data.
