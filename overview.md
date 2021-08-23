@@ -40,7 +40,7 @@ Loaded the data with pandas. Added a 'Fraud' column that contains numeric values
 - Step 2:
 Using latitude and longitude to visualize the data distribution. Seems most of the transactions in Asia are fraudulent.
 
-<img src="images/world.png" width="700" />
+<img src="images/world.png"/>
 
 - Step 3:
 Data warngling:
