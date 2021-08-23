@@ -39,9 +39,14 @@ Loaded the data with pandas. Added a 'Fraud' column that contains numeric values
 - Step 2:
 Using latitude and longitude to visualize the data distribution. Seems most of the transactions in Asia are fraudulent.
 
-3. Look at the features. Make note of ones you think will be particularly useful to you.
+<img src="images/world.png" width="700" />
 
-4. Do any data visualization that helps you understand the data.
+- Step 3:
+Data warngling:
+* NaN values are replaces with -1
+* These string type features are dropped:
+* These string type features are one hot encoded:  
+* `previous_payouts` column is converted to integer values that indicates the length of previous payouts. 
 
 
 #### [Deliverable]: Scoping the problem
@@ -58,7 +63,8 @@ Before you get cranking on your model, think of how to approach the problem.
 The model will be used only the first step in the fraud identification process. You do not use the model to declare a ground truth about fraud or not fraud, but simply to flag which transactions need further manual review.  You will be building a triage model of what are the most pressing (and costly) transactions you have seen. It may also be useful to display what factors contribute to a given case being flagged as fraudulent by your model.  
 
 #### Comparing models
-Start building your potential models.
+* Base Model:
+* Ultimate Model: Random Forest classifier.  
 
 **Notes for writing code:**
 * As you write your code, **always be committing** (ABC) to Github!
