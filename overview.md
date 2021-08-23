@@ -33,6 +33,7 @@ The data is confidential and can not be shared outside of Galvanize. The trainin
 ### EDA
 - Step 1:
 Loaded the data with pandas. Added a 'Fraud' column that contains numeric values 0,1,2 depending on if the event is fraud. If `acct_type` field contains the word `fraud`, that point is considered 'High Risk' or 2, if the field is `premium`, the label is 'Low Risk' or 0 and everything else is considered 'Medium Risk' or 1.
+86.3 % of the data is low risk, 4.7% are spammer and TOS voilators and 9% is fraudulent.
 
 <img src="images/transactions.png" width="700" />
 
@@ -49,22 +50,12 @@ Data warngling:
 * `previous_payouts` column is converted to integer values that indicates the length of previous payouts. 
 
 
-#### [Deliverable]: Scoping the problem
-Before you get cranking on your model, think of how to approach the problem.
-
-1. What preprocessing might you want to do? How will you build your feature matrix? What different ideas do you have?
-
-2. What models do you want to try?
-
-3. **What metric will you use to determine success?**
-
-
 ### Model
 The model will be used only the first step in the fraud identification process. You do not use the model to declare a ground truth about fraud or not fraud, but simply to flag which transactions need further manual review.  You will be building a triage model of what are the most pressing (and costly) transactions you have seen. It may also be useful to display what factors contribute to a given case being flagged as fraudulent by your model.  
 
 #### Comparing models
 * Base Model:
-* Ultimate Model: Random Forest classifier.  
+* Ultimate Model: Random Forest classifier with 
 
 **Notes for writing code:**
 * As you write your code, **always be committing** (ABC) to Github!
