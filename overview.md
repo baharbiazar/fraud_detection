@@ -32,12 +32,9 @@ The data is confidential and can not be shared outside of Galvanize. The trainin
 
 ### EDA
 - Step 1:
+Loaded the data with pandas. Added a 'Fraud' column that contains numeric values 0,1,2 depending on if the event is fraud. If `acct_type` field contains the word `fraud`, that point is considered 'High Risk' or 2, if the field is `premium`, the label is 'Low Risk' or 0 and everything else is considered 'Medium Risk' or 1.
 
-
-#### [Deliverable]: Look at the data
-Start by looking at the data.
-
-1. Load the data with pandas. Add a 'Fraud' column that contains True or False values depending on if the event is fraud. If `acct_type` field contains the word `fraud`, label that point Fraud.
+<img src="images/transactions.png" width="700" />
 
 2. Check how many fraud and not fraud events you have.
 
